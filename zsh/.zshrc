@@ -96,6 +96,7 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias pn=pnpm
+alias tmux="tmux -f ~/.config/tmux/tmux.conf"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
