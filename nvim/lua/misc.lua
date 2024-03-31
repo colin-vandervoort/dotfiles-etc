@@ -2,12 +2,14 @@ vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
-vim.cmd("set nu rnu")
+
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 vim.g.mapleader = " "
 
 -- Set filetypes for certain files without extensions
-local shell_files = { 
+local shell_files = {
   "~/.bashrc",
   "~/.bash_aliases",
   "~/.bash_profile",

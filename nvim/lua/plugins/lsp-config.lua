@@ -24,7 +24,7 @@ return {
           "phpactor",
           "pylsp",
           "rust_analyzer",
-          "tsserver",
+          "tsserver", -- JS/TS
         }
       })
     end
@@ -38,6 +38,7 @@ return {
       lspconfig.html.setup({})
       lspconfig.lua_ls.setup({})
 
+      -- normal mode keymaps
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
