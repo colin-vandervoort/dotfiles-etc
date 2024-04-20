@@ -1,0 +1,3 @@
+= dotfiles-etc
+
+Code for setting up a software workstation.
