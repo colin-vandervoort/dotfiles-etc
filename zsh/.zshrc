@@ -57,6 +57,12 @@ ZSH_THEME="robbyrussell"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000000
+SAVEHIST=10000000
+
+HISTORY_IGNORE="(ls|cd|pwd|exit|cd)*"
+
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -65,6 +71,9 @@ ZSH_THEME="robbyrussell"
 plugins=(
   git
   # terraform
+  # zsh-completions
+  # zsh-autosuggestions
+  # zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -94,6 +103,11 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+export BAT_THEME="base16"
+
+# navigate to global ssh directory
+alias sshhome="cd ~/.ssh"
 
 alias pn=pnpm
 alias tmux="tmux -f ~/.config/tmux/tmux.conf"
