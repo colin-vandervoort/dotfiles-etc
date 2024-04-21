@@ -1,0 +1,91 @@
+{
+    "editor.renderWhitespace": "boundary",
+    "editor.wrappingIndent": "deepIndent",
+    "editor.wordWrap": "on",
+    "svelte.enable-ts-plugin": true,
+    "extensions.ignoreRecommendations": true,
+    "editor.minimap.enabled": false,
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash"
+        },
+        "Conda PowerShell": {
+            "path": "${env:windir\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-NoExit",
+                "-Command",
+                "& 'C:\\ProgramData\\Miniconda3\\shell\\condabin\\conda-hook.ps1' ; conda activate 'C:\\ProgramData\\Miniconda3'"
+            ]
+        },
+        "Ubuntu (WSL)": {
+            "path": "C:\\WINDOWS\\System32\\wsl.exe",
+            "args": [
+                "-d",
+                "Ubuntu"
+            ]
+        }
+    },
+    "go.toolsManagement.autoUpdate": true,
+    "files.trimTrailingWhitespace": true,
+    "workbench.tree.indent": 12,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.confirmDragAndDrop": false,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "cSpell.userWords": [
+        "appdata",
+        "astro",
+        "astrojs",
+        "asynciterable",
+        "bindgen",
+        "consts",
+        "cssnano",
+        "datetime",
+        "Deca",
+        "dotfiles",
+        "Katex",
+        "Lexend",
+        "lyrasearch",
+        "nvim",
+        "posix",
+        "preact",
+        "proto",
+        "rehype",
+        "shiki",
+        "truetype",
+        "tsconfigs",
+        "turq",
+        "twind",
+        "unocss",
+        "USERPROFILE",
+        "wdth",
+        "wght"
+    ],
+    "json.validate.enable": false,
+    "window.zoomLevel": -1,
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.fontLigatures": false,
+}
