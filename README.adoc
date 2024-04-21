@@ -1,3 +1,13 @@
 = dotfiles-etc
 
-Code for setting up a software workstation.
+Code for setting up a software workstation. Config files are currently tracked for the following programs:
+
+* git
+* neovim
+* tmux
+* vscode
+* zsh
+
+== Installing
+
+There is a rust binary in `./tools` directory for installing config files. Use the alias `cargo install-cfgs` to run the setup script from the workspace root.
