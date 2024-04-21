@@ -13,6 +13,7 @@ local shell_files = {
   "~/.bashrc",
   "~/.bash_aliases",
   "~/.bash_profile",
+  "~/.profile",
   "~/.zshrc",
 }
 vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
