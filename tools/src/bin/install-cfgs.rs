@@ -4,21 +4,17 @@ use std::path::{Path, PathBuf};
 
 fn get_workspace_root() -> Result<PathBuf, &'static str> {
     if let Ok(current_dir) = env::var("CARGO_MANIFEST_DIR") {
-        let workspace_root_search_result =
-            Path::new(&current_dir)
-                .ancestors()
-                .skip(1)
-                .find_map(|path| {
-                    if path.join("Cargo.toml").exists() {
-                        Some(path.to_path_buf())
-                    } else {
-                        None
-                    }
-                });
-        match workspace_root_search_result {
-            Some(workspace_root) => Ok(workspace_root),
-            None => Err("Cargo.toml not found in any ancestor of CARGO_MANIFEST_DIR"),
-        }
+        Path::new(&current_dir)
+            .ancestors()
+            .skip(1)
+            .find_map(|path| {
+                if path.join("Cargo.toml").exists() {
+                    Some(path.to_path_buf())
+                } else {
+                    None
+                }
+            })
+            .ok_or("Cargo.toml not found in any ancestor of CARGO_MANIFEST_DIR")
     } else {
         Err("CARGO_MANIFEST_DIR not set")
     }
