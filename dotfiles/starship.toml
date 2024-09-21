@@ -1,0 +1,18 @@
+format = '$hostname$time$shell$directory$character'
+
+add_newline = false
+
+[shell]
+disabled = false
+bash_indicator = 'bash'
+powershell_indicator = 'PS'
+
+[time]
+disabled = false
+format = '[\[ $time \]]($style) '
+style = "bright-blue"
+
+[directory]
+truncation_length = 2
+truncate_to_repo = false
+style = 'blue'
