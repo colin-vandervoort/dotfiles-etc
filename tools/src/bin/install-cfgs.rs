@@ -138,7 +138,7 @@ impl ConfigFile {
             }
         } else {
             match self.install_method {
-                InstallMethod::Symlink => todo!(),
+                InstallMethod::Symlink => self.try_symlink(),
                 InstallMethod::Copy => self.try_copy(),
             }
         }
