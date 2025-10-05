@@ -2,8 +2,12 @@
     "asciidoc.antora.enableAntoraSupport": true,
     "cSpell.words": [
         "AWSCLI",
+        "cfgs",
+        "Graphviz",
+        "pwsh",
         "Rustlang",
         "Rustup",
+        "thiserror",
         "winget"
     ]
 }
