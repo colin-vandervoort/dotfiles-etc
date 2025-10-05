@@ -1,0 +1,25 @@
+= Tools
+
+== Rust-based config installer
+
+=== Unit testing
+
+I need some way to test handling conflicts when installing config files. The Rust `tempfile` crate seems like a good option. I would need to parameterize the destination paths for files, so that they got installed inside a temporary directory instead of the "real" `USERPROFILE` or `HOME` directory.
+
+Doing more "real" testing might be difficult, especially for Mac and Windows, which are my normal platforms for development.
+
+[cols="1,1", options="header"]
+|===
+|Platform
+|Options
+
+|Windows
+|?
+
+|Linux
+|Docker, VirtualBox, QEMU?
+
+|Mac
+|?
+
+|===

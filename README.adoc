@@ -10,4 +10,4 @@ Code for setting up a software workstation. Config files are currently tracked f
 
 == Installing
 
-There is a rust binary in `./tools` directory for installing config files. Use the alias `cargo install-cfgs` to run the setup script from the workspace root.
+There is a work-in-progress Rust binary in the `./tools` directory for installing config files. Use the alias `cargo install-cfgs` to run the setup script from the workspace root.
