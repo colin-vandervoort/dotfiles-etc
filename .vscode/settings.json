@@ -1,0 +1,9 @@
+{
+    "asciidoc.antora.enableAntoraSupport": true,
+    "cSpell.words": [
+        "AWSCLI",
+        "Rustlang",
+        "Rustup",
+        "winget"
+    ]
+}
