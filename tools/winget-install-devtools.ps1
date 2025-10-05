@@ -1,3 +1,5 @@
+# cSpell: ignore sharkdp, Schniz, gitui
+#
 # https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.5
 
 # $WingetPackages = @(
@@ -27,6 +29,7 @@
 #     'RedHat.Podman-Desktop',
 #     'Rustlang.Rustup'
 #     'sharkdp.bat',
+#     'Schniz.fnm',
 #     'Starship.Starship',
 #     'StephanDilly.gitui'
 # )
