@@ -3,8 +3,10 @@
 # https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.5
 
 # $WingetPackages = @(
+#     'AgileBits.1Password.CLI',
 #     'Amazon.AWSCLI',
 #     'Anaconda.Miniconda3'
+#     'Discord.Discord',
 #     'Docker.DockerDesktop',
 #     'Git.Git',
 #     'GitExtensionsTeam.GitExtensions'
@@ -12,6 +14,7 @@
 #     'GitHub.GitHubDesktop',
 #     'GitHub.GitLFS',
 #     'GoLang.Go',
+#     'Graphviz.Graphviz',
 #     'Hashicorp.Vagrant',
 #     'Meld.Meld',
 #     'Microsoft.Edge',
