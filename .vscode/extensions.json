@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "asciidoctor.asciidoctor-vscode",
+        "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "johnnymorganz.stylua",
+        "ms-vscode.powershell",
+        "rust-lang.rust-analyzer",
+        "streetsidesoftware.code-spell-checker",
+        "timonwong.shellcheck",
+    ]
+}
