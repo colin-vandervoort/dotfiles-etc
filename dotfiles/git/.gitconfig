@@ -1,3 +1,5 @@
+# cSpell: ignore excludesfile,
+
 [core]
 	excludesfile = ~/.gitignore.global
 
@@ -9,3 +11,6 @@
 
 [user]
 	name = Colin VanDervoort
+
+[pull]
+	rebase = true

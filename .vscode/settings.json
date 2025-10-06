@@ -29,6 +29,7 @@
         "cssnano",
         "datetime",
         "Deca",
+        "Dervoort",
         "dotfiles",
         "esbenp",
         "GOPATH",
@@ -82,5 +83,6 @@
         ".vscode",
         ".vscode-insiders",
         "~/.rustup"
-    ]
+    ],
+    "stylua.targetReleaseVersion": "latest"
 }
