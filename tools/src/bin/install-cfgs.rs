@@ -4,6 +4,7 @@ use std::ffi::OsString;
 use std::fs;
 use std::os;
 use std::path::{Path, PathBuf};
+use std::process::Command;
 
 use fs_extra;
 use thiserror::Error;
@@ -72,6 +73,58 @@ pub enum ConfigFileInstallError {
     DestinationHasPermissionsIssue(OsString),
     #[error(transparent)]
     Other(#[from] anyhow::Error),
+}
+
+fn validate_powershell_profile(workspace_root: &PathBuf) -> Result<(), Box<dyn std::error::Error>> {
+    let test_script_path = workspace_root.join("pwsh").join("test-profile.ps1");
+    
+    if !test_script_path.exists() {
+        return Err("PowerShell test script not found at pwsh/test-profile.ps1".into());
+    }
+    
+    println!("🔍 Validating PowerShell profile before installation...");
+    
+    let output = Command::new("pwsh")
+        .arg("-NoProfile")
+        .arg("-ExecutionPolicy")
+        .arg("Bypass")
+        .arg("-File")
+        .arg(&test_script_path)
+        .arg("-ProfilePath")
+        .arg(workspace_root.join("pwsh/profiles/current-user-current-host/Microsoft.PowerShell_profile.ps1"))
+        .output();
+    
+    match output {
+        Ok(result) => {
+            let stdout = String::from_utf8_lossy(&result.stdout);
+            let stderr = String::from_utf8_lossy(&result.stderr);
+            
+            // Print the test output
+            if !stdout.is_empty() {
+                println!("{}", stdout);
+            }
+            if !stderr.is_empty() {
+                eprintln!("{}", stderr);
+            }
+            
+            if result.status.success() {
+                println!("✅ PowerShell profile validation passed");
+                Ok(())
+            } else {
+                Err(format!("PowerShell profile validation failed with exit code: {}", 
+                          result.status.code().unwrap_or(-1)).into())
+            }
+        }
+        Err(e) => {
+            if e.kind() == std::io::ErrorKind::NotFound {
+                println!("⚠️  PowerShell (pwsh) not found - skipping profile validation");
+                println!("   Install PowerShell to enable profile validation");
+                Ok(()) // Don't fail installation if PowerShell isn't available
+            } else {
+                Err(format!("Failed to run PowerShell validation: {}", e).into())
+            }
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -384,13 +437,20 @@ fn main() {
     dbg!(&vscode_user_settings);
     dbg!(&pwsh_curr_user_curr_host);
 
-    let configs = vec![
+    let mut configs = vec![
         // nvim_cfg,
         // gitconfig,
         // gitignore_global,
         // vscode_user_settings,
-        pwsh_curr_user_curr_host,
     ];
+
+    // Validate PowerShell profile before installation
+    if let Err(e) = validate_powershell_profile(&workspace_root) {
+        eprintln!("PowerShell profile validation failed: {}", e);
+        // eprintln!("Continuing with installation, but PowerShell profile may have issues...");
+    } else {
+        configs.push(pwsh_curr_user_curr_host);
+    }
 
     for config in configs {
         match config.install() {

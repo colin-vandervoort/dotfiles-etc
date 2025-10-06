@@ -31,6 +31,7 @@
         "Graphviz",
         "hookspath",
         "Katex",
+        "LASTEXITCODE",
         "Lexend",
         "lyrasearch",
         "nvim",
