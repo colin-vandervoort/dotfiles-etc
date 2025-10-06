@@ -1,9 +1,53 @@
+ifdef::env-github[]
+:MERMAID: source, mermaid
+endif::[]
+ifndef::env-github[]
+:MERMAID: mermaid
+endif::[]
+
 = Dotfiles symlinked on my machine
+:source-highlighter: highlight.js
 
 == Install with stow
 
 [source,bash]
----
+----
 stow --target ~/.config .
----
+----
 
+== Bash config lifecycle
+
+[{MERMAID}]
+----
+flowchart TB
+    Start["bash starts"]
+    SourceProfile["Source .bash_profile and/or .profile"]
+    SourceMainConfig["Source .bashrc"]
+    UseShell["Use shell"]
+
+    Start --> SourceProfile
+    SourceProfile --> SourceMainConfig
+    SourceMainConfig --> UseShell
+----
+
+== Zsh config lifecycle
+
+[{MERMAID}]
+----
+flowchart TB
+    Start["zsh starts"]
+    SourceProfile["Source .zprofile and/or .profile"]
+    SourceMainConfig["Source .zshrc"]
+    UseShell["Use shell"]
+    SourceLogout["Source .zlogout"]
+
+    Start --> SourceProfile
+    SourceProfile --> SourceMainConfig
+    SourceMainConfig --> UseShell
+    UseShell --> SourceLogout
+----
+
+== Sources
+
+* https://www.baeldung.com/linux/zsh-configuration-files
+* https://www.baeldung.com/linux/inputrc-file

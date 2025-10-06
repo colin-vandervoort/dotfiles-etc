@@ -1,3 +1,5 @@
+<!-- cSpell: ignore fakecmd -->
+
 # PowerShell Profile Debugging Quick Reference
 
 ## Running the Validation
@@ -21,7 +23,7 @@ cd pwsh && ./test-profile.ps1
 pwsh -NoProfile -Command "Get-Content './profiles/current-user-current-host/Microsoft.PowerShell_profile.ps1' | Invoke-Expression"
 ```
 
-### ⚠️ **Missing Dependencies** 
+### ⚠️ **Missing Dependencies**
 **Symptom**: `⚠ fnm availability - Optional dependency missing`
 ```bash
 # Install fnm (Fast Node Manager)
@@ -51,7 +53,7 @@ function Test-ProgramExists { param([string]$ProgramName); return (Get-Command $
 Set-Alias -Name "ll" Get-ChildItem
 ```
 
-### ⚠️ **Alias Conflicts**  
+### ⚠️ **Alias Conflicts**
 **Symptom**: `⚠ Alias conflict: gc - Alias 'gc' already exists`
 ```powershell
 # Check what the existing alias does:
@@ -74,7 +76,7 @@ pwsh -NoProfile
 Test-ProgramExists git      # Should return nothing (success)
 Test-ProgramExists fakecmd  # Should return nothing (not found)
 
-# Test aliases  
+# Test aliases
 ll          # Should list directory contents
 homedir     # Should navigate to home directory
 gc --help   # Should show git commit help

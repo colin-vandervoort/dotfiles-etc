@@ -1,0 +1,7 @@
+= Nvim config
+
+link:https://github.com/folke/lazy.nvim[lazy.nvim] is used for loading plugins.
+
+== Code style
+
+Lua source code should be formatted using link:https://github.com/JohnnyMorganz/StyLua[StyLua], which generally follows the the link:https://roblox.github.io/lua-style-guide/[Roblox Lua Style Guide]
