@@ -11,3 +11,13 @@ Code for setting up a software workstation. Config files are currently tracked f
 == Installing
 
 There is a work-in-progress Rust binary in the `./tools` directory for installing config files. Use the alias `cargo install-cfgs` to run the setup script from the workspace root.
+
+== Potential additions
+
+* SQLite utilities
+* Python
+** [.line-through]#PDM#
+** UV
+* GPG (or GPG4Win)
+* Sigstore Cosign
+* Terraform / OpenTofu / Terragrunt

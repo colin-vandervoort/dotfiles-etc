@@ -1,4 +1,4 @@
-# cSpell: ignore sharkdp, Schniz, gitui
+# cSpell: ignore koalaman, gitui, Schniz, sharkdp
 #
 # https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.5
 
@@ -16,6 +16,7 @@
 #     'GoLang.Go',
 #     'Graphviz.Graphviz',
 #     'Hashicorp.Vagrant',
+#     'koalaman.shellcheck',
 #     'Meld.Meld',
 #     'Microsoft.Edge',
 #     'Microsoft.PowerShell',

@@ -109,25 +109,67 @@ export BAT_THEME="base16"
 # navigate to global ssh directory
 alias sshhome="cd ~/.ssh"
 
-alias pn=pnpm
 alias tmux="tmux -f ~/.config/tmux/tmux.conf"
+
+# Go config
+export GOPATH=$HOME/golang
+export GOROOT=/opt/homebrew/opt/go/libexec
+# export GOROOT=/usr/local/go/bin
+export GOPROXY=https://proxy.golang.org
+export GOSUMDB="sum.golang.org"
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+
+##############
+# JavaScript #
+##############
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Go config
-export GOPATH=$HOME/golang
-export GOROOT=/opt/homebrew/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
+alias pn=pnpm
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
-# Deno
+########
+# Deno #
+########
+
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
+##########
+# Python #
+##########
+
+export PATH=/Users/colin/Library/Python/3.13/bin:$PATH
+
+########
+# Ruby #
+######## 
+
+# put Homebrew Ruby first in PATH
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+# help compilers find ruby
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+
+# help pkg-config find ruby
+export PKG_CONFIG_PATH="/opt/homebrew/opt/ruby/lib/pkgconfig"
+
+# gems
+export PATH=$HOME/.gem/bin:$PATH
+export GEM_HOME=$HOME/.gem
+
+##################
+# Dart / Flutter #
+##################
+
+export PATH=$HOME/development/flutter/bin:$PATH
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 

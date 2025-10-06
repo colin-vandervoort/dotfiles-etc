@@ -1,0 +1,9 @@
+= Dotfiles symlinked on my machine
+
+== Install with stow
+
+[source,bash]
+---
+stow --target ~/.config .
+---
+
