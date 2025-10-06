@@ -1,14 +1,55 @@
 {
-    "asciidoc.antora.enableAntoraSupport": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": false,
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace"
+    },
+    "[lua]": {
+        "editor.defaultFormatter": "JohnnyMorganz.stylua",
+        "editor.formatOnSave": true
+    },
+    "asciidoc.antora.showEnableAntoraPrompt": true,
     "cSpell.words": [
+        "appdata",
+        "astro",
+        "astrojs",
+        "asynciterable",
         "AWSCLI",
+        "bindgen",
         "cfgs",
+        "consts",
+        "cssnano",
+        "datetime",
+        "dotfiles",
         "Graphviz",
         "hookspath",
+        "Katex",
+        "Lexend",
+        "lyrasearch",
+        "nvim",
+        "posix",
+        "preact",
+        "proto",
         "pwsh",
+        "rehype",
         "Rustlang",
         "Rustup",
+        "shiki",
         "thiserror",
+        "truetype",
+        "tsconfigs",
+        "turq",
+        "twind",
+        "unocss",
+        "USERPROFILE",
+        "wdth",
         "winget"
     ],
     "cSpell.ignorePaths": [
