@@ -93,7 +93,10 @@ impl ConfigFile {
     fn try_symlink(&self) -> Result<(), ConfigFileInstallError> {
         #[cfg(unix)]
         {
-            os::unix::fs::symlink(self.src, self.dst)
+            match os::unix::fs::symlink(&self.src, &self.dst) {
+                Ok(_) => return Ok(()),
+                Err(err) => return Err(ConfigFileInstallError::Other(err.into())),
+            }
         }
         #[cfg(windows)]
         {
@@ -128,8 +131,8 @@ impl ConfigFile {
             match self.conflict_strategy {
                 FileConflictStrategy::Skip => {
                     println!("File already exists and \"skip\" strategy was provided, skipping");
-                    return Ok(())
-                },
+                    return Ok(());
+                }
                 FileConflictStrategy::Panic => panic!(),
                 FileConflictStrategy::Backup => todo!(),
                 FileConflictStrategy::OverwriteAlways => self.try_copy(),
@@ -189,7 +192,10 @@ impl ConfigDirectory {
     fn try_symlink(&self) -> Result<(), ConfigDirectoryInstallError> {
         #[cfg(unix)]
         {
-            os::unix::fs::symlink(self.src, self.dst)
+            match os::unix::fs::symlink(&self.src, &self.dst) {
+                Ok(_) => return Ok(()),
+                Err(err) => return Err(ConfigDirectoryInstallError::Other(err.into())),
+            }
         }
         #[cfg(windows)]
         {
@@ -341,7 +347,12 @@ fn main() {
     let pwsh_curr_user_curr_host = ConfigItem::File(ConfigFile {
         src: ext_path(
             &workspace_root,
-            vec!["pwsh", "profiles", "current-user-current-host", "Microsoft.PowerShell_profile.ps1"],
+            vec![
+                "pwsh",
+                "profiles",
+                "current-user-current-host",
+                "Microsoft.PowerShell_profile.ps1",
+            ],
         ),
         dst: match env::consts::OS {
             "windows" => ext_path(
@@ -352,11 +363,19 @@ fn main() {
                     "Microsoft.PowerShell_profile.ps1",
                 ],
             ),
-            "macos" | "linux" => todo!(),
+            "macos" => ext_path(
+                &user_home,
+                vec![".config", "powershell", "Microsoft.PowerShell_profile.ps1"],
+            ),
+            "linux" => todo!(),
             _ => panic!("Unsupported OS"),
         },
         conflict_strategy: FileConflictStrategy::OverwriteAlways,
-        install_method: InstallMethod::Copy,
+        // install_method: InstallMethod::Copy,
+        install_method: match env::consts::OS {
+            "windows" => InstallMethod::Copy,
+            _ => InstallMethod::Symlink,
+        },
     });
 
     dbg!(&nvim_cfg);
