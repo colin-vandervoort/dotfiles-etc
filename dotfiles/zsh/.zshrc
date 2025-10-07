@@ -101,12 +101,6 @@ fi
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-export BAT_THEME="base16"
 
 # navigate to global ssh directory
 alias sshhome="cd ~/.ssh"
@@ -126,6 +120,15 @@ export PATH=$PATH:$GOROOT/bin
 # JavaScript #
 ##############
 
+# OnePassword CLI
+command -v op > /dev/null && {
+  eval "$(op completion zsh)"; compdef _op op
+}
+
+# bat config
+export BAT_THEME="base16"
+
+# NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -152,7 +155,7 @@ export PATH=/Users/colin/Library/Python/3.13/bin:$PATH
 
 ########
 # Ruby #
-######## 
+########
 
 # put Homebrew Ruby first in PATH
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
