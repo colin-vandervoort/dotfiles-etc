@@ -14,6 +14,9 @@ There is a work-in-progress Rust binary in the `./tools` directory for installin
 
 == Potential additions
 
+* Automated Neovim tests
+** https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-test.md
+** https://github.com/nvim-lua/plenary.nvim
 * SQLite utilities
 * Python
 ** [.line-through]#PDM#
@@ -21,3 +24,19 @@ There is a work-in-progress Rust binary in the `./tools` directory for installin
 * GPG (or GPG4Win)
 * Sigstore Cosign
 * Terraform / OpenTofu / Terragrunt
+* Installing rust-based tools globally with cargo
+** https://crates.io/crates/tree-sitter-cli
+* Install iTerm via Homebrew
+* Install Docker Desktop via Homebrew
+* Docker autocompletion via /Applications/Docker.app/Contents/MacOS/com.docker.admin
+
+== Tools to investigate
+
+* link:https://www.techsmith.com/snagit/[Snagit]: Cross-platform snipping tool ($40/yr)
+* markup-based presentations
+** https://github.com/slidevjs/slidev
+** https://marp.app/
+
+== Issues
+
+* vim.tbl_add_reverse_lookup is deprecated
