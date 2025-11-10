@@ -1,4 +1,4 @@
-# cSpell: ignore duellj, robbyrussell, SAVEHIST, sshhome
+# cSpell: ignore duellj, robbyrussell, SAVEHIST, sshhome, jenv
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -178,3 +178,15 @@ export GEM_HOME=$HOME/.gem
 export PATH=$HOME/development/flutter/bin:$PATH
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
+
+##############
+# Java / JVM #
+##############
+
+# https://github.com/jenv/jenv
+test -d "$HOME/.jenv/bin" && {
+    export PATH="$HOME/.jenv/bin:$PATH"
+}
+command -v jenv && {
+    eval "$(jenv init -)"
+}
