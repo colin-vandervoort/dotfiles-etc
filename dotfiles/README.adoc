@@ -8,12 +8,21 @@ endif::[]
 = Dotfiles symlinked on my machine
 :source-highlighter: highlight.js
 
-== Install with stow
+== Install
 
+Everything here ends up symlinked into place, by one of two routes:
+
+* Directory-level, into `~/.config`: `git`, `nvim`, `tmux`, `vscode`, `zsh` (e.g. `~/.config/zsh -> dotfiles/zsh`). These map cleanly onto `~/.config`, so they can be installed with https://www.gnu.org/software/stow/[GNU Stow] instead of by hand — the `cargo install-cfgs` Rust tool (`../tools`) doesn't manage these yet, so stow is currently the easiest way to get them:
++
 [source,bash]
 ----
-stow --target ~/.config .
+cd dotfiles
+stow --target ~/.config git nvim tmux vscode zsh
 ----
++
+Don't run bare `stow --target ~/.config .` — treating the whole `dotfiles` directory as one package would also try to symlink `.profile`/`.bash_profile`/`.bashrc`/`starship.toml`/`README.adoc` into `~/.config`, which is wrong for all of them (the shell files belong directly in `$HOME`; starship's target *is* `~/.config`, but as its own file, not nested under a package dir; `README.adoc` belongs nowhere in `~/.config`). None of these are stow packages in their own right without restructuring the layout, so leave them out of any stow invocation.
+
+* File-level, directly into `$HOME` or `~/.config`: `.profile` (from `profile/.profile`) and `.bash_profile`/`.bashrc` into `$HOME`; `starship.toml` into `~/.config/starship.toml`; the PowerShell profile into the platform's profile path. `cargo install-cfgs` automates these.
 
 == Bash config lifecycle
 
@@ -21,14 +30,16 @@ stow --target ~/.config .
 ----
 flowchart TB
     Start["bash starts"]
-    SourceProfile["Source .bash_profile and/or .profile"]
-    SourceMainConfig["Source .bashrc"]
+    SourceProfile["Source .bash_profile"]
+    SourceProfileDotFile[".bash_profile sources ~/.profile, then ~/.bashrc"]
     UseShell["Use shell"]
 
     Start --> SourceProfile
-    SourceProfile --> SourceMainConfig
-    SourceMainConfig --> UseShell
+    SourceProfile --> SourceProfileDotFile
+    SourceProfileDotFile --> UseShell
 ----
+
+`.bash_profile` (`dotfiles/.bash_profile`) is the entry point; it sources the shared `~/.profile` (`dotfiles/profile/.profile` — env vars, `PATH`, aliases common to bash and zsh) and then `~/.bashrc` (`dotfiles/.bashrc` — bash-only bits, currently just a guarded `starship init`).
 
 == Zsh config lifecycle
 
@@ -36,16 +47,33 @@ flowchart TB
 ----
 flowchart TB
     Start["zsh starts"]
-    SourceProfile["Source .zprofile and/or .profile"]
     SourceMainConfig["Source .zshrc"]
+    SourceProfileDotFile[".zshrc explicitly sources ~/.profile"]
     UseShell["Use shell"]
-    SourceLogout["Source .zlogout"]
 
-    Start --> SourceProfile
-    SourceProfile --> SourceMainConfig
-    SourceMainConfig --> UseShell
-    UseShell --> SourceLogout
+    Start --> SourceMainConfig
+    SourceMainConfig --> SourceProfileDotFile
+    SourceProfileDotFile --> UseShell
 ----
+
+Unlike bash, zsh does not read `~/.profile` on its own. `dotfiles/zsh/.zshrc` (symlinked at `~/.config/zsh`, itself sourced by the real `~/.zshrc`) sources it explicitly with a plain `[ -f "$HOME/.profile" ] && . "$HOME/.profile"` line, after the oh-my-zsh bootstrap.
+
+=== `.zprofile` gotcha
+
+zsh *does* have a `~/.zprofile`, and some installers (Obsidian's "Command line interface" setting, for one — see below) write `export PATH=...` lines into it without asking. It's tempting to put shared setup there instead of `.zshrc`, but don't: `.zprofile` is only read for *login* shells, while `.zshrc` is read only for *interactive* ones — Terminal.app happens to give you both, but plenty of other shells (a script, `ssh host command`, most terminal emulators' "new tab") give you only one or the other. `.profile` is sourced from `.zshrc`, i.e. tied to "interactive," which is the case that actually matters for an everyday shell. `~/.zprofile` here is intentionally left near-empty with a pointer comment, not deleted outright, since tools keep re-discovering it and writing to it.
+
+This also bites shell scripts that test with `zsh -c` or `zsh -l -c` instead of `zsh -i -c`: `-c` alone is non-interactive, so `.zshrc` (and therefore `.profile`) is silently skipped even with `-l`, which can look identical to a real config bug.
+
+=== Third-party tools that self-register into shell config
+
+Homebrew and the Obsidian CLI both write directly to shell startup files when you set them up, rather than expecting you to configure `PATH` yourself:
+
+* **Homebrew**: `brew shellenv` sets `PATH`, `MANPATH`, `HOMEBREW_PREFIX`, etc. macOS's own `/etc/paths.d/homebrew` already puts `/opt/homebrew/bin` on `PATH` for every shell, but *only* Homebrew's own `shellenv` sets `HOMEBREW_PREFIX` and the rest — and that used to live only in `~/.zprofile`, so bash never saw it.
+* **Obsidian CLI**: enabling Obsidian > Settings > General > Command line interface makes Obsidian append `export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"` to `~/.zprofile` (confirmed via the `"cli":true` key in `~/Library/Application Support/obsidian/obsidian.json`) — again zsh-only, and gone if `~/.zprofile` is ever wiped.
+
+Both are now folded into `dotfiles/profile/.profile` (guarded with `[ -x ... ]`/`[ -d ... ]` checks, since not every machine this repo runs on will have Homebrew or Obsidian installed at all), so bash picks them up too. If either tool re-registers itself into `~/.zprofile` again later, that's expected — just fold the new line into `.profile` and clear `.zprofile` again rather than leaving the duplicate.
+
+On Windows, the pwsh profile (`pwsh/profiles/current-user-current-host/Microsoft.PowerShell_profile.ps1`) has an equivalent best-effort Obsidian `PATH` fallback, guarded behind `$IsWindows` — that guard matters: `$env:LOCALAPPDATA` is `$null` on macOS/Linux, and an unguarded `Join-Path $env:LOCALAPPDATA ...` throws and aborts the *entire* profile load, not just that one line. Caught by `pwsh/test-profile.ps1` during development; worth remembering for any future platform-specific addition to that file.
 
 == Sources
 

@@ -2,11 +2,16 @@
 
 Code for setting up a software workstation. Config files are currently tracked for the following programs:
 
+* bash
 * git
 * neovim
+* powershell
+* starship
 * tmux
 * vscode
 * zsh
+
+Portable env vars, `PATH` entries, and aliases shared between bash and zsh live in a single `~/.profile` (`dotfiles/profile/.profile`); see `dotfiles/README.adoc` for how the shells wire it in. That file also carries `PATH`/env setup for third-party tools that self-register into shell config on their own — Homebrew (`brew shellenv`) and the Obsidian CLI (Obsidian > Settings > General > Command line interface) both do this, and folding their setup into `.profile` is what makes it apply to both shells instead of just whichever one the tool's installer happened to touch.
 
 == Installing
 
@@ -28,7 +33,11 @@ There is a work-in-progress Rust binary in the `./tools` directory for installin
 ** https://crates.io/crates/tree-sitter-cli
 * Install iTerm via Homebrew
 * Install Docker Desktop via Homebrew
+* Install hadolint via Homebrew
 * Docker autocompletion via /Applications/Docker.app/Contents/MacOS/com.docker.admin
+* link:https://github.com/streetsidesoftware/cspell-cli[cspell-cli]
+* LateX
+** link:https://tug.org/mactex/mactex-download.html[MacTeX]
 
 == Tools to investigate
 
