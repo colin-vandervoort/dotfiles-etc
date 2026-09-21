@@ -1,5 +1,7 @@
 # PowerShell Profile Testing
 
+> **Guard platform-specific env vars.** `$env:LOCALAPPDATA` (and similarly `$env:USERPROFILE`, etc.) is `$null` on macOS/Linux. An unguarded `Join-Path $env:LOCALAPPDATA ...` throws and aborts the *entire* profile load — not just that line — since this same file is tested cross-platform via `test-profile.ps1`. Wrap Windows-only logic in `if ($IsWindows) { ... }`. Caught this exact bug adding the Obsidian CLI `PATH` fallback below — `test-profile.ps1` went from 1 failure to 0 once guarded.
+
 ## Overview
 
 The `test-profile.ps1` script validates your PowerShell profile before installation to catch potential issues early.

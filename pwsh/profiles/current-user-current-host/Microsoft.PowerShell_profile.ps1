@@ -44,6 +44,10 @@ Set-Alias -Name "gs" GitSwitch
 function GitBranch { & git branch $args }
 Set-Alias -Name "gb" GitBranch
 
+# Go doc, syntax-highlighted with bat (mirrors bgd in dotfiles/profile/.profile)
+function BatGoDoc { go doc @args | bat -l go }
+Set-Alias -Name "bgd" BatGoDoc
+
 # Directory shortcuts
 function Set-Location-To-Home-Dir { Set-Location -Path "~" }
 Set-Alias -Name "homedir" Set-Location-To-Home-Dir
@@ -58,4 +62,18 @@ Set-PSReadLineOption @PSReadLineOptions
 # Init Starship
 if (Test-ProgramExists starship) {
     Invoke-Expression (&starship init powershell)
+}
+
+# Obsidian CLI (Obsidian > Settings > General > Command line interface)
+# On macOS, enabling this setting makes Obsidian append its own app
+# directory to ~/.zprofile's PATH. Unverified whether Windows does an
+# equivalent self-registration (e.g. via a User environment variable) --
+# if it does, this is a harmless no-op (already on PATH). If it doesn't,
+# this is a best-effort fallback pointing at Obsidian's typical Windows
+# install location; adjust $obsidianDir if yours differs.
+if ($IsWindows -and -not (Test-ProgramExists obsidian)) {
+    $obsidianDir = Join-Path $env:LOCALAPPDATA "Obsidian"
+    if (Test-Path $obsidianDir) {
+        $env:PATH += ";$obsidianDir"
+    }
 }
