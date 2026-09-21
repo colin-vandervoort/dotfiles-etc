@@ -1,3 +1,6 @@
+-- https://github.com/nvim-treesitter/nvim-treesitter
+-- https://www.lazyvim.org/plugins/treesitter
+
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -5,6 +8,10 @@ return {
 		config = function()
 			local treesitter_config = require("nvim-treesitter.configs")
 			treesitter_config.setup({
+				-- Automatically install missing parsers when entering buffer
+				-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+				-- auto_install = true,
+
 				ensure_installed = {
 					"astro",
 					"bash",

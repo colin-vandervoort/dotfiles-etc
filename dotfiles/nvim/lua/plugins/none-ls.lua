@@ -8,7 +8,7 @@ return {
 				ensure_installed = {
 					-- diagnostics
 					"hadolint",
-					"markdownlint",
+					-- "markdownlint",
 
 					-- formatters
 					"black",
