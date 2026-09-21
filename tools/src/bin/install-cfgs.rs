@@ -77,13 +77,13 @@ pub enum ConfigFileInstallError {
 
 fn validate_powershell_profile(workspace_root: &PathBuf) -> Result<(), Box<dyn std::error::Error>> {
     let test_script_path = workspace_root.join("pwsh").join("test-profile.ps1");
-    
+
     if !test_script_path.exists() {
         return Err("PowerShell test script not found at pwsh/test-profile.ps1".into());
     }
-    
+
     println!("🔍 Validating PowerShell profile before installation...");
-    
+
     let output = Command::new("pwsh")
         .arg("-NoProfile")
         .arg("-ExecutionPolicy")
@@ -91,14 +91,17 @@ fn validate_powershell_profile(workspace_root: &PathBuf) -> Result<(), Box<dyn s
         .arg("-File")
         .arg(&test_script_path)
         .arg("-ProfilePath")
-        .arg(workspace_root.join("pwsh/profiles/current-user-current-host/Microsoft.PowerShell_profile.ps1"))
+        .arg(
+            workspace_root
+                .join("pwsh/profiles/current-user-current-host/Microsoft.PowerShell_profile.ps1"),
+        )
         .output();
-    
+
     match output {
         Ok(result) => {
             let stdout = String::from_utf8_lossy(&result.stdout);
             let stderr = String::from_utf8_lossy(&result.stderr);
-            
+
             // Print the test output
             if !stdout.is_empty() {
                 println!("{}", stdout);
@@ -106,13 +109,16 @@ fn validate_powershell_profile(workspace_root: &PathBuf) -> Result<(), Box<dyn s
             if !stderr.is_empty() {
                 eprintln!("{}", stderr);
             }
-            
+
             if result.status.success() {
                 println!("✅ PowerShell profile validation passed");
                 Ok(())
             } else {
-                Err(format!("PowerShell profile validation failed with exit code: {}", 
-                          result.status.code().unwrap_or(-1)).into())
+                Err(format!(
+                    "PowerShell profile validation failed with exit code: {}",
+                    result.status.code().unwrap_or(-1)
+                )
+                .into())
             }
         }
         Err(e) => {
