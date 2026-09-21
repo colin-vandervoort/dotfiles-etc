@@ -9,7 +9,7 @@ function Test-ProgramExists {
     param (
         [string]$ProgramName
     )
-    return (Get-Command $ProgramName -ErrorAction SilentlyContinue | Out-Null)
+    return [bool](Get-Command $ProgramName -ErrorAction SilentlyContinue)
 }
 
 # Get information about current PowerShell
