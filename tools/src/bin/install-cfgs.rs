@@ -437,18 +437,50 @@ fn main() {
         },
     });
 
+    // Shared shell profile (POSIX sh, sourced by both bash and zsh)
+    let shell_profile = ConfigItem::File(ConfigFile {
+        src: ext_path(&workspace_root, vec!["dotfiles", "profile", ".profile"]),
+        dst: ext_path(&user_home, vec![".profile"]),
+        conflict_strategy: Default::default(),
+        install_method: Default::default(),
+    });
+
+    // bash
+    let bash_profile = ConfigItem::File(ConfigFile {
+        src: ext_path(&workspace_root, vec!["dotfiles", ".bash_profile"]),
+        dst: ext_path(&user_home, vec![".bash_profile"]),
+        conflict_strategy: Default::default(),
+        install_method: Default::default(),
+    });
+    let bashrc = ConfigItem::File(ConfigFile {
+        src: ext_path(&workspace_root, vec!["dotfiles", ".bashrc"]),
+        dst: ext_path(&user_home, vec![".bashrc"]),
+        conflict_strategy: Default::default(),
+        install_method: Default::default(),
+    });
+
     dbg!(&nvim_cfg);
     dbg!(&gitconfig);
     dbg!(&gitignore_global);
     dbg!(&vscode_user_settings);
     dbg!(&pwsh_curr_user_curr_host);
+    dbg!(&shell_profile);
+    dbg!(&bash_profile);
+    dbg!(&bashrc);
 
     let mut configs = vec![
         // nvim_cfg,
         // gitconfig,
         // gitignore_global,
         // vscode_user_settings,
+        shell_profile,
     ];
+
+    // bash isn't the default shell on Windows, so its rc files don't apply there.
+    if env::consts::OS != "windows" {
+        configs.push(bash_profile);
+        configs.push(bashrc);
+    }
 
     // Validate PowerShell profile before installation
     if let Err(e) = validate_powershell_profile(&workspace_root) {
