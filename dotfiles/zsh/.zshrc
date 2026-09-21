@@ -87,34 +87,13 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='mvim'
-fi
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-
-# navigate to global ssh directory
-alias sshhome="cd ~/.ssh"
-
-alias tmux="tmux -f ~/.config/tmux/tmux.conf"
-
-# Go config
-export GOPATH=$HOME/golang
-export GOROOT=/opt/homebrew/opt/go/libexec
-# export GOROOT=/usr/local/go/bin
-export GOPROXY=https://proxy.golang.org
-export GOSUMDB="sum.golang.org"
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
+# Portable env vars, PATH entries, and aliases shared with bash live in
+# ~/.profile (dotfiles/profile/.profile) — zsh doesn't source that file
+# on its own, so pull it in explicitly.
+[ -f "$HOME/.profile" ] && \. "$HOME/.profile"
 
 ##############
 # JavaScript #
@@ -123,70 +102,4 @@ export PATH=$PATH:$GOROOT/bin
 # OnePassword CLI
 command -v op > /dev/null && {
   eval "$(op completion zsh)"; compdef _op op
-}
-
-# bat config
-export BAT_THEME="base16"
-
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-alias pn=pnpm
-
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-# pnpm end
-
-########
-# Deno #
-########
-
-export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-##########
-# Python #
-##########
-
-export PATH=/Users/colin/Library/Python/3.13/bin:$PATH
-
-########
-# Ruby #
-########
-
-# put Homebrew Ruby first in PATH
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-
-# help compilers find ruby
-export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
-
-# help pkg-config find ruby
-export PKG_CONFIG_PATH="/opt/homebrew/opt/ruby/lib/pkgconfig"
-
-# gems
-export PATH=$HOME/.gem/bin:$PATH
-export GEM_HOME=$HOME/.gem
-
-##################
-# Dart / Flutter #
-##################
-
-export PATH=$HOME/development/flutter/bin:$PATH
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-
-
-##############
-# Java / JVM #
-##############
-
-# https://github.com/jenv/jenv
-test -d "$HOME/.jenv/bin" && {
-    export PATH="$HOME/.jenv/bin:$PATH"
-}
-command -v jenv && {
-    eval "$(jenv init -)"
 }
